@@ -8,12 +8,15 @@ import MoviesGalery from '../../components/MoviesGalery/MoviesGalery';
 import SortBar from '../../components/SortBar/SortBar';
 import { SearchOptionContainer } from './TVPage.styled';
 import { PageContainer } from 'pages/MoviesPage/MoviesPage.styled';
+import PaginationList from 'components/Pagination/Pagination';
 
 const TVPage = () => {
   const [movies, setMovies] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const [loading, setLoading] = useState(false);
   const [sortOption, setSortOption] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
 
   const searchQuery = searchParams.get('query');
 
@@ -34,10 +37,10 @@ const TVPage = () => {
       return;
     }
     setLoading(true);
-    fetchTVByQuery(searchQuery)
+    fetchTVByQuery(searchQuery, currentPage)
       .then(data => {
         const {
-          data: { results },
+          data: { results, total_pages },
         } = data;
 
         if (results.length === 0) {
@@ -47,25 +50,29 @@ const TVPage = () => {
         }
 
         setMovies(results);
+        setTotalPage(total_pages);
       })
       .catch(error => {
         return toast.error('Sorry, something went wrong, try again');
       })
       .finally(setLoading(false));
-  }, [searchQuery]);
+  }, [searchQuery, currentPage]);
 
   useEffect(() => {
-    fetchTVBySort(sortOption)
+    fetchTVBySort(sortOption, currentPage)
       .then(data => {
         const {
-          data: { results },
+          data: { results, total_pages },
         } = data;
         setMovies(results);
+        setTotalPage(total_pages);
       })
       .catch(error => {
         return toast.error('Sorry, something went wrong, try again');
       });
-  }, [sortOption]);
+  }, [sortOption, currentPage]);
+  const paginate = num => setCurrentPage(num);
+
   return (
     <PageContainer>
       <SearchOptionContainer>
@@ -76,6 +83,11 @@ const TVPage = () => {
       {loading && <Loader />}
 
       {movies && <MoviesGalery movies={movies} />}
+      <PaginationList
+        totalPage={totalPage}
+        paginate={paginate}
+        currentPage={currentPage}
+      />
     </PageContainer>
   );
 };

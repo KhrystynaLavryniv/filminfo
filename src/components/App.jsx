@@ -23,32 +23,39 @@ const TrandingMoviePage = lazy(() =>
 export const App = () => {
   const [movies, setMovies] = useState([]);
   const [tvEpisodes, setTvEpisodes] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  // const [perPage] = useState(20);
+  const [totalPage, setTotalPage] = useState(1);
+  // const [totalResult, setTotalResult] = useState(null);
 
   useEffect(() => {
-    fetchTrandingMovies()
+    fetchTrandingMovies(currentPage)
       .then(data => {
         const {
-          data: { results },
+          data: { results, total_pages },
         } = data;
         setMovies(results);
+        setTotalPage(total_pages);
       })
       .catch(error => {
         return toast.error('Sorry, something went wrong, try again');
       });
-  }, []);
+  }, [currentPage]);
 
   useEffect(() => {
-    fetchTrandingTVEpisodes()
+    fetchTrandingTVEpisodes(currentPage)
       .then(data => {
         const {
-          data: { results },
+          data: { results, total_pages },
         } = data;
         setTvEpisodes(results);
+        setTotalPage(total_pages);
       })
       .catch(error => {
         return toast.error('Sorry, something went wrong, try again');
       });
-  }, []);
+  }, [currentPage]);
+  const paginate = num => setCurrentPage(num);
 
   return (
     <AppContainer>
@@ -63,7 +70,14 @@ export const App = () => {
               <Route path="movies" element={<MoviesPage />} />
               <Route
                 path="movies/trending"
-                element={<TrandingMoviePage movies={movies} />}
+                element={
+                  <TrandingMoviePage
+                    movies={movies}
+                    totalPage={totalPage}
+                    paginate={paginate}
+                    currentPage={currentPage}
+                  />
+                }
               />
 
               <Route path="movies/:movieId" element={<MovieDetailsPage />}>
@@ -72,13 +86,16 @@ export const App = () => {
                 <Route path="reviews" element={<Reviews />} />
                 <Route path="similar" element={<SimilarMovie />} />
               </Route>
-              <Route
-                path="tvepisodes"
-                element={<TVPage tvEpisodes={tvEpisodes} />}
-              />
+              <Route path="tvepisodes" element={<TVPage />} />
               <Route
                 path="tvepisodes/trending"
-                element={<TrandingTVPage tvEpisodes={tvEpisodes} />}
+                element={
+                  <TrandingTVPage
+                    tvEpisodes={tvEpisodes}
+                    totalPage={totalPage}
+                    paginate={paginate}
+                  />
+                }
               />
             </Route>
           </Routes>

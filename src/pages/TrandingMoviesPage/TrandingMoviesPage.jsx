@@ -8,8 +8,9 @@ import {
   GoBackButton,
   LinkBack,
 } from '../MovieDetalisPage/MovieDetalisPage.styled';
+import PaginationList from 'components/Pagination/Pagination';
 
-const TrandingMoviePage = ({ movies }) => {
+const TrandingMoviePage = ({ movies, totalPage, paginate, currentPage }) => {
   const location = useLocation();
 
   const path = useRef(location);
@@ -26,7 +27,18 @@ const TrandingMoviePage = ({ movies }) => {
       </GoBackButton>
       <h2>Tranding movies today</h2>
 
-      {movies && <MoviesGalery movies={movies} />}
+      {movies && (
+        <MoviesGalery
+          movies={movies}
+          totalPage={totalPage}
+          paginate={paginate}
+        />
+      )}
+      <PaginationList
+        totalPage={totalPage}
+        paginate={paginate}
+        currentPage={currentPage}
+      />
     </PageContainer>
   );
 };

@@ -7,13 +7,15 @@ import toast from 'react-hot-toast';
 import MoviesGalery from '../../components/MoviesGalery/MoviesGalery';
 import SortBar from '../../components/SortBar/SortBar';
 import { SearchOptionContainer, PageContainer } from './MoviesPage.styled';
+import PaginationList from 'components/Pagination/Pagination';
 
 const MoviesPage = () => {
   const [movies, setMovies] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const [loading, setLoading] = useState(false);
   const [sortOption, setSortOption] = useState('');
-  // const [sortedMovies, setSortedMovies] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
 
   const searchQuery = searchParams.get('query');
 
@@ -34,10 +36,10 @@ const MoviesPage = () => {
       return;
     }
     setLoading(true);
-    fetchMovieByQuery(searchQuery)
+    fetchMovieByQuery(searchQuery, currentPage)
       .then(data => {
         const {
-          data: { results },
+          data: { results, total_pages },
         } = data;
 
         if (results.length === 0) {
@@ -47,25 +49,28 @@ const MoviesPage = () => {
         }
 
         setMovies(results);
+        setTotalPage(total_pages);
       })
       .catch(error => {
         return toast.error('Sorry, something went wrong, try again');
       })
       .finally(setLoading(false));
-  }, [searchQuery]);
+  }, [searchQuery, currentPage]);
 
   useEffect(() => {
-    fetchMovieBySort(sortOption)
+    fetchMovieBySort(sortOption, currentPage)
       .then(data => {
         const {
-          data: { results },
+          data: { results, total_pages },
         } = data;
         setMovies(results);
+        setTotalPage(total_pages);
       })
       .catch(error => {
         return toast.error('Sorry, something went wrong, try again');
       });
-  }, [sortOption]);
+  }, [sortOption, currentPage]);
+  const paginate = num => setCurrentPage(num);
   return (
     <PageContainer>
       <SearchOptionContainer>
@@ -75,11 +80,12 @@ const MoviesPage = () => {
 
       {loading && <Loader />}
       {movies && <MoviesGalery movies={movies} />}
-      {/* {movies ? (
-        <MoviesGalery movies={movies} />
-      ) : (
-        <MoviesGalery movies={sortedMovies} />
-      )} */}
+
+      <PaginationList
+        totalPage={totalPage}
+        paginate={paginate}
+        currentPage={currentPage}
+      />
     </PageContainer>
   );
 };
