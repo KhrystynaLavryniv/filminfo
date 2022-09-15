@@ -2,7 +2,6 @@ import React from 'react';
 import { MdOutlineStarRate } from 'react-icons/md';
 import { useLocation } from 'react-router-dom';
 import imageNotFound from '../../images/nf.jpg';
-import Pagination from 'components/Pagination/Pagination';
 import {
   MovieList,
   MovieItem,
