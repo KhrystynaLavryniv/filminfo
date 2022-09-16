@@ -64,14 +64,6 @@ const MovieDetailsPage = () => {
 
       {movie && (
         <>
-          {/* <GoBackButton type="button">
-            <LinkBack
-              to={path.current?.state?.from ?? `/`}
-              state={{ from: path.current }}
-            >
-              <BsArrowLeftShort />
-            </LinkBack>
-          </GoBackButton> */}
           <Cont>
             <GoBackButton type="button">
               <LinkBack

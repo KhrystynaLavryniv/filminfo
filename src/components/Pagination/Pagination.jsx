@@ -1,17 +1,15 @@
 import React from 'react';
-import { Pagination } from '@mui/material';
+import { Pagination, PaginationItem } from '@mui/material';
 import { PaginationContainer } from './Pagination.styled';
 import { grey } from '@mui/material/colors';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { Link, MemoryRouter, Routes, Route } from 'react-router-dom';
 
 const theme = createTheme({
   palette: {
     primary: {
       main: grey[100],
     },
-    // common: {
-    //   black: '#000',
-    // },
   },
 });
 const PaginationList = ({ totalPage, currentPage, paginate }) => {
@@ -29,41 +27,27 @@ const PaginationList = ({ totalPage, currentPage, paginate }) => {
           onChange={(_, num) => {
             paginate(num);
           }}
+          renderItem={item => (
+            <PaginationItem
+              component={Link}
+              to={`?page=${item.page}`}
+              {...item}
+            />
+          )}
         />
       </ThemeProvider>
     </PaginationContainer>
   );
 };
-// const Pagination = ({ totalPage, paginate }) => {
-//   const pageNumbers = [];
-//   for (let i = 1; i <= totalPage; i++) {
-//     pageNumbers.push(i);
-//   }
-//   return (
-//     <>
-//       <ul className="pagination justify-content-center">
-//         <li class="page-item disabled">
-//           <button class="page-link">Previous</button>
-//         </li>
-//         {pageNumbers.map(number => (
-//           <li key={number} className="page-item">
-//             <button
-//               className="page-link"
-//               onClick={() => {
-//                 paginate(number);
-//               }}
-//             >
-//               {number}
-//             </button>
-//           </li>
-//         ))}
-//         <li class="page-item">
-//           <button class="page-link">Next</button>
-//         </li>
-//       </ul>
-//     </>
-//   );
-// };
 
-// export default Pagination;
 export default PaginationList;
+
+export function PaginationLink() {
+  return (
+    <MemoryRouter initialEntries={['/inbox']} initialIndex={0}>
+      <Routes>
+        <Route path="*" element={<PaginationList />} />
+      </Routes>
+    </MemoryRouter>
+  );
+}
