@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { fetchMovieReviews } from '../../services/api';
 import Loader from '../Loader/Loader';
 import toast from 'react-hot-toast';
+import { ReviewContainer, ReviewItem } from './Reviews.styled';
 
 const Reviews = () => {
   const [reviews, setReviews] = useState([]);
@@ -34,14 +35,17 @@ const Reviews = () => {
     <>
       {loading && <Loader />}
       {reviews && (
-        <ul>
-          {reviews.map(({ id, author, content }) => (
-            <li key={id}>
-              <h4>Author: {author}</h4>
-              <p>{content}</p>
-            </li>
-          ))}
-        </ul>
+        <ReviewContainer>
+          <h4>Total reviews: {reviews.length}</h4>
+          <ul>
+            {reviews.map(({ id, author, content }) => (
+              <ReviewItem key={id}>
+                <h4>{author}:</h4>
+                <p>{content}</p>
+              </ReviewItem>
+            ))}
+          </ul>
+        </ReviewContainer>
       )}
     </>
   );

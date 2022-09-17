@@ -38,6 +38,7 @@ const TrandingMoviePage = ({ movies, totalPage, paginate, currentPage }) => {
         totalPage={totalPage}
         paginate={paginate}
         currentPage={currentPage}
+        searchParams={``}
       />
     </PageContainer>
   );

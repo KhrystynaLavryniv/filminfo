@@ -15,6 +15,7 @@ import {
 
 const HomePage = ({ movies, tvEpisodes }) => {
   const location = useLocation();
+
   return (
     <PageContainer>
       <TitleContainer>

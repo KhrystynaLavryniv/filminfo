@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-export const MovieTitle = styled.p`
+export const MovieTitle = styled.div`
   font-size: 14px;
-  // padding: 5px;
+  text-align: center;
 `;
 export const MovieList = styled.ul`
   display: flex;
@@ -15,6 +15,7 @@ export const MovieList = styled.ul`
 export const MovieItem = styled.li`
   position: relative;
   width: calc(100% / 5 - 20px);
+  height: auto;
   margin: 15px 10px;
   border-radius: 5px;
   border-radius: 5px 5px 5px 5px;
@@ -55,14 +56,4 @@ export const MovieImg = styled.img`
   width: 100%;
   height: 85%;
   border-radius: 5px 5px 0 0;
-
-  // :hover {
-  //   cursor: pointer;
-  //   scale: 1.1;
-  //   border-radius: 5px 5px 5px 5px;
-
-  //   -webkit-box-shadow: 5px 5px 12px 0px rgba(196, 232, 241, 1);
-  //   -moz-box-shadow: 5px 5px 12px 0px rgba(196, 232, 241, 1);
-  //   box-shadow: 5px 5px 12px 0px rgba(196, 232, 241, 1);
-  // }
 `;

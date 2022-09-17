@@ -2,66 +2,53 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchSimilarMovie } from '../../services/api';
-import { useLocation, Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import {
-  SimilarMovieList,
-  SimilarMovieItem,
-  SimilarMovieImg,
-} from './SimilarMovie.styled';
+import { SimilarMovieContainer } from './SimilarMovie.styled';
+import MoviesGalery from 'components/MoviesGalery/MoviesGalery';
+import PaginationList from 'components/Pagination/Pagination';
 
 const SimilarMovie = () => {
   const [similarMovie, setSimilarMovie] = useState([]);
   const { movieId } = useParams();
   const [loading, setLoading] = useState(false);
-  const location = useLocation();
+  const [totalPages, setTotalPages] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     setLoading(true);
 
-    fetchSimilarMovie(movieId)
+    fetchSimilarMovie(movieId, currentPage)
       .then(data => {
         const {
-          data: { results },
+          data: { results, total_pages },
         } = data;
 
-        setSimilarMovie(results.slice(0, 8));
+        setSimilarMovie(results);
+        setTotalPages(total_pages);
       })
       .catch(error => {
         return toast.error('Sorry, something went wrong, try again');
       })
       .finally(setLoading(false));
-  }, [movieId]);
+  }, [movieId, currentPage]);
+  const paginate = num => setCurrentPage(num);
 
   return (
-    <>
+    <SimilarMovieContainer>
       {loading && <p>Loading...</p>}
       {similarMovie && (
-        <SimilarMovieList>
-          {similarMovie.map(
-            ({
-              id,
-              title,
-              name,
-              poster_path,
-              genre_ids,
-              vote_average,
-              overview,
-              genresValues,
-            }) => (
-              <SimilarMovieItem key={id}>
-                <Link to={`/movies/${id}`} state={{ from: location }}>
-                  <SimilarMovieImg
-                    src={`https://image.tmdb.org/t/p/w500${poster_path}`}
-                    alt={title ? title : name}
-                  />
-                </Link>
-              </SimilarMovieItem>
-            )
-          )}
-        </SimilarMovieList>
+        <>
+          <h3>Similar Movie:</h3>
+          <MoviesGalery movies={similarMovie} />
+          <PaginationList
+            movies={similarMovie}
+            totalPage={totalPages}
+            paginate={paginate}
+            currentPage={currentPage}
+          />
+        </>
       )}
-    </>
+    </SimilarMovieContainer>
   );
 };
 

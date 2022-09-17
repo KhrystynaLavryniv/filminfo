@@ -4,6 +4,7 @@ import { fetchMovieCredits } from '../../services/api';
 import Loader from '../Loader/Loader';
 import toast from 'react-hot-toast';
 import { CastImg, CastList, CastCont, CastItem } from './Cast.styled';
+import imageNotFound from '../../images/nf.jpg';
 
 function Cast() {
   const [castInfo, setCastInfo] = useState([]);
@@ -43,19 +44,18 @@ function Cast() {
           <CastList>
             {castInfo.map(({ cast_id, name, character, profile_path }) => (
               <CastItem key={cast_id}>
-                <div>
-                  <CastImg
-                    src={
-                      profile_path
-                        ? 'https://image.tmdb.org/t/p/w500' + profile_path
-                        : 'noPosterImg'
-                    }
-                    alt={name}
-                  />
-                </div>
+                <CastImg
+                  src={
+                    profile_path
+                      ? 'https://image.tmdb.org/t/p/w500' + profile_path
+                      : imageNotFound
+                  }
+                  alt={name}
+                />
+
                 <div>
                   <p>{name}</p>
-                  {character && <p>({character})</p>}
+                  {character ? <p>({character})</p> : <p>?</p>}
                 </div>
               </CastItem>
             ))}

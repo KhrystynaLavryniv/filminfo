@@ -19,15 +19,24 @@ export const LinkBack = styled(NavLink)`
     color: #7dc2fa;
   }
 `;
-
-export const Cont = styled.div`
-  display: flex;
-  padding: 20px 20px;
-`;
-export const MovieInfo = styled.div`
+export const MovieDetalisContainer = styled.div`
   display: flex;
   flex-direction: column;
+  min-height: calc(100vh - 68px - 68px - 40px);
+  padding: 20px 20px;
 `;
+export const Cont = styled.div`
+  display: flex;
+  // padding: 20px 20px;
+`;
+
+export const MovieInfo = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 20px 0;
+`;
+
 export const MovieDetails = styled.div`
   display: flex;
   flex-direction: column;
@@ -46,6 +55,7 @@ export const MovieTitle = styled.h2`
   padding: 0;
   margin-bottom: 10px;
 `;
+
 export const MovieVote = styled.div`
   width: max-content;
   background-color: #7dc2fa;
@@ -53,8 +63,16 @@ export const MovieVote = styled.div`
   padding: 0 5px;
   display: flex;
 `;
-export const MovieOverview = styled.p`
+export const MovieDetailsText = styled.div`
+  display: flex;
   padding: 0;
+  margin-top: 10px;
+  align-items: flex-end;
+`;
+export const MovieDetailsOption = styled.p`
+  width: 140px;
+`;
+export const MovieDetailsOverview = styled.h3`
   margin-top: 10px;
 `;
 

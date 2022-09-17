@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const SortBarSelect = styled.select`
   cursor: pointer;
   border: none;
-  background-color: #404040;
+  background-color: #212c39;
   padding: 10px 15px;
 
   color: aliceblue;

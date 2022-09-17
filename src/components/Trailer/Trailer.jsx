@@ -3,12 +3,12 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchTrailer } from '../../services/api';
 import { TrailerItem, TrailerList } from './Trailer.styled';
+import { toast } from 'react-hot-toast';
+
 const Trailer = () => {
   const { movieId } = useParams();
   const [trailer, setTrailer] = useState([]);
   const [loading, setLoading] = useState(false);
-  // const location = useLocation();
-  // const path = useRef(location);
 
   useEffect(() => {
     setLoading(true);
@@ -17,14 +17,11 @@ const Trailer = () => {
         const {
           data: { results },
         } = data;
-        // console.log(data);
-        // console.log({ results });
 
         setTrailer(results.splice(0, 3));
-        // console.log(trailer);
       })
       .catch(error => {
-        //    return toast.error('Sorry, something went wrong, try again');
+        return toast.error('Sorry, something went wrong, try again');
       })
 
       .finally(setLoading(false));

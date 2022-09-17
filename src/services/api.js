@@ -21,9 +21,9 @@ export async function fetchMovieById(movieId) {
   return await axios.get(`${BASE_URL}/movie/${movieId}?api_key=${API_KEY}`);
 }
 
-export async function fetchSimilarMovie(movieId) {
+export async function fetchSimilarMovie(movieId, currentPage) {
   return await axios.get(
-    `${BASE_URL}/movie/${movieId}/similar?api_key=${API_KEY}`
+    `${BASE_URL}/movie/${movieId}/similar?api_key=${API_KEY}&page=${currentPage}`
   );
 }
 
@@ -34,7 +34,7 @@ export async function fetchMovieByQuery(value, currentPage) {
 }
 export async function fetchTVByQuery(value, currentPage) {
   return await axios.get(
-    `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${value}&include_adult=falsepage=${currentPage}`
+    `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${value}&include_adult=false&page=${currentPage}`
   );
 }
 export async function fetchMovieCredits(movieId) {

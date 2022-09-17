@@ -11,12 +11,15 @@ import {
   MovieImg,
   MovieDetails,
   MovieTitle,
-  MovieOverview,
+  MovieDetailsText,
   AdditionalInformation,
+  MovieDetalisContainer,
   Cont,
   LinkBack,
   MovieInfo,
   MovieVote,
+  MovieDetailsOption,
+  MovieDetailsOverview,
 } from './MovieDetalisPage.styled';
 import { MdOutlineStarRate } from 'react-icons/md';
 
@@ -32,7 +35,17 @@ const MovieDetailsPage = () => {
     fetchMovieById(movieId)
       .then(data => {
         const {
-          data: { poster_path, title, name, overview, vote_average, genres },
+          data: {
+            poster_path,
+            title,
+            name,
+            overview,
+            original_language,
+            release_date,
+            vote_average,
+            genres,
+            vote_count,
+          },
         } = data;
 
         setMovie({
@@ -41,8 +54,11 @@ const MovieDetailsPage = () => {
             : imageNotFound,
           title,
           name,
+          original_language,
+          vote_count,
           overview: overview ? overview : 'There is no overview',
           vote_average,
+          release_date,
 
           genresValues:
             genres.length === 0
@@ -59,7 +75,7 @@ const MovieDetailsPage = () => {
   }, [movieId]);
 
   return (
-    <>
+    <MovieDetalisContainer>
       {loading && <Loader />}
 
       {movie && (
@@ -83,14 +99,30 @@ const MovieDetailsPage = () => {
                 <MovieTitle>
                   {movie.title ? movie.title : movie.name}
                 </MovieTitle>
-                {/* <p>{movie.release_date}</p> */}
                 <MovieVote>
                   <MdOutlineStarRate />
                   {Math.floor(movie.vote_average * 100) / 100}
                 </MovieVote>
-                <p>{movie.genresValues}</p>
-                <MovieOverview>Overview:</MovieOverview>
-                <p>{movie.overview}</p>
+
+                {/* <MovieDetailsText>
+                  <MovieDetailsOption>Vote count:</MovieDetailsOption>
+                  <MovieDetailsQty>"{movie.vote_count}"</MovieDetailsQty>
+                </MovieDetailsText> */}
+                <MovieDetailsText>
+                  <MovieDetailsOption>Genres:</MovieDetailsOption> "
+                  {movie.genresValues}"
+                </MovieDetailsText>
+                <MovieDetailsText>
+                  <MovieDetailsOption>Release date:</MovieDetailsOption>"
+                  {movie.release_date}"
+                </MovieDetailsText>
+                <MovieDetailsText>
+                  <MovieDetailsOption>Original language:</MovieDetailsOption>"
+                  {movie.original_language}"
+                </MovieDetailsText>
+                <MovieDetailsOverview> Overview:</MovieDetailsOverview>
+
+                <MovieDetailsText>{movie.overview}</MovieDetailsText>
               </MovieDetails>
               <div>
                 <AdditionalInformation>
@@ -108,12 +140,15 @@ const MovieDetailsPage = () => {
                   </li>
                 </AdditionalInformation>
               </div>
-              <Outlet />
             </MovieInfo>
           </Cont>
+
+          <div>
+            <Outlet />
+          </div>
         </>
       )}
-    </>
+    </MovieDetalisContainer>
   );
 };
 export default MovieDetailsPage;

@@ -14,7 +14,6 @@ import {
 
 const MoviesGalery = ({ movies, totalPage, paginate }) => {
   const location = useLocation();
-
   return (
     <>
       <MovieList>
@@ -50,7 +49,6 @@ const MoviesGalery = ({ movies, totalPage, paginate }) => {
           )
         )}
       </MovieList>
-      {/* <Pagination totalPage={totalPage} paginate={paginate} /> */}
     </>
   );
 };

@@ -12,7 +12,6 @@ export const Navigation = () => {
         <Link to="/">Home</Link>
         <Link to="/movies">Movies</Link>
         <Link to="/tvepisodes">TVEpisodes</Link>
-        <Link to="/">Log in</Link>
       </NavContainer>
     </>
   );
