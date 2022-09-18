@@ -30,7 +30,6 @@ export const App = () => {
     parseInt(location.search?.split('?').slice(1).join('').split('=')[1]) || 1
   );
   const [totalPage, setTotalPage] = useState(1);
-  console.log(location.search?.split('?').slice(1).join('').split('=')[1]);
 
   useEffect(() => {
     fetchTrandingMovies(currentPage)

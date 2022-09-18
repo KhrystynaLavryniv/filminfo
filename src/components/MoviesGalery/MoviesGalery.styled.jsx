@@ -1,10 +1,15 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-export const MovieTitle = styled.div`
+export const MovieTitle = styled.p`
   font-size: 14px;
+  display: none;
   text-align: center;
+  :hover {
+    display: block;
+  }
 `;
+
 export const MovieList = styled.ul`
   display: flex;
   flex-wrap: wrap;
@@ -35,9 +40,19 @@ export const MovieLink = styled(Link)`
   :hover {
     cursor: pointer;
   }
+  :hover p {
+    display: block;
+  }
+  :hover span {
+    display: none;
+  }
 `;
 export const MovieRate = styled.div`
-  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 10px 0 10px;
+  height: 25px;
   color: aliceblue;
   font-size: 14px;
 `;

@@ -2,6 +2,7 @@ import React from 'react';
 import { MdOutlineStarRate } from 'react-icons/md';
 import { useLocation } from 'react-router-dom';
 import imageNotFound from '../../images/nf.jpg';
+import EllipsisText from 'react-ellipsis-text';
 import {
   MovieList,
   MovieItem,
@@ -43,6 +44,10 @@ const MoviesGalery = ({ movies, totalPage, paginate }) => {
                     <p>{Math.floor(vote_average * 100) / 100}</p>
                   </MovieVote>
                   <MovieTitle>{title ? title : name} </MovieTitle>
+                  <EllipsisText
+                    text={`${title ? title : name}`}
+                    length={'26'}
+                  />
                 </MovieRate>
               </MovieLink>
             </MovieItem>
