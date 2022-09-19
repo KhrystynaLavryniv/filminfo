@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { fetchTVByQuery, fetchTVBySort } from '../../services/api';
-import { SearchBar } from '../../components/SearchBar/SearchBar';
+import { useLocation, useSearchParams, Link } from 'react-router-dom';
+import { fetchTVBySort } from '../../services/api';
 import Loader from '../../components/Loader/Loader';
 import toast from 'react-hot-toast';
 import MoviesGalery from '../../components/MoviesGalery/MoviesGalery';
@@ -9,67 +8,44 @@ import SortBar from '../../components/SortBar/SortBar';
 import { SearchOptionContainer } from './TVPage.styled';
 import { PageContainer } from 'pages/MoviesPage/MoviesPage.styled';
 import PaginationList from 'components/Pagination/Pagination';
+import { ImSearch } from 'react-icons/im';
+import { IconContext } from 'react-icons';
+import { SearchBtn } from 'components/SearchBar/SearchBar.styled';
 
 const TVPage = () => {
-  const [movies, setMovies] = useState(null);
+  const location = useLocation();
+  const [tvepisodes, setTvepisodes] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const [loading, setLoading] = useState(false);
-  const [sortOption, setSortOption] = useState('');
-  const [currentPage, setCurrentPage] = useState(1);
+  const [sortOption, setSortOption] = useState(
+    location.search?.split('?').slice(1, 2).join('').split('=')[1] || ''
+  );
+  const [currentPage, setCurrentPage] = useState(
+    parseInt(location.search?.split('?').slice(2).join('').split('=')[1]) || 1
+  );
   const [totalPage, setTotalPage] = useState(1);
+  searchParams.get('sort');
 
-  const searchQuery = searchParams.get('query');
-
-  const handleSubmit = evt => {
-    evt.preventDefault();
-    setSearchParams({ query: evt.currentTarget.elements.query.value });
-    evt.currentTarget.elements.query.value = '';
-  };
   const handleChangeSelect = e => {
+    setSearchParams({ sort: e.target.value });
     setSortOption(e.target.value);
+    setCurrentPage(1);
   };
 
   useEffect(() => {
-    if (searchQuery === '') {
-      return toast.error("Sorry, but you didn't enter a movie title");
-    }
-    if (!searchQuery) {
-      return;
-    }
     setLoading(true);
-    fetchTVByQuery(searchQuery, currentPage)
+    fetchTVBySort(sortOption, currentPage)
       .then(data => {
         const {
           data: { results, total_pages },
         } = data;
-
-        if (results.length === 0) {
-          return toast.error(
-            'Sorry, there are no movies with that title, try again'
-          );
-        }
-
-        setMovies(results);
+        setTvepisodes(results);
         setTotalPage(total_pages);
       })
       .catch(error => {
         return toast.error('Sorry, something went wrong, try again');
       })
       .finally(setLoading(false));
-  }, [searchQuery, currentPage]);
-
-  useEffect(() => {
-    fetchTVBySort(sortOption, currentPage)
-      .then(data => {
-        const {
-          data: { results, total_pages },
-        } = data;
-        setMovies(results);
-        setTotalPage(total_pages);
-      })
-      .catch(error => {
-        return toast.error('Sorry, something went wrong, try again');
-      });
   }, [sortOption, currentPage]);
   const paginate = num => setCurrentPage(num);
 
@@ -77,16 +53,28 @@ const TVPage = () => {
     <PageContainer>
       <SearchOptionContainer>
         <SortBar onChange={handleChangeSelect} />
-        <SearchBar onSubmit={handleSubmit} />
+
+        <SearchBtn>
+          <Link to={`/tvepisodes/search`} state={{ from: location }}>
+            <IconContext.Provider value={{ color: 'aliceblue', size: '2em' }}>
+              <div>
+                <ImSearch />
+              </div>
+            </IconContext.Provider>
+          </Link>
+        </SearchBtn>
       </SearchOptionContainer>
 
       {loading && <Loader />}
 
-      {movies && <MoviesGalery movies={movies} />}
+      {tvepisodes && (
+        <MoviesGalery pathName={'/tvepisodes'} movies={tvepisodes} />
+      )}
       <PaginationList
         totalPage={totalPage}
         paginate={paginate}
         currentPage={currentPage}
+        searchParams={`?sort=${sortOption}`}
       />
     </PageContainer>
   );

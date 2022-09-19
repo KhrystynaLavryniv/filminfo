@@ -8,17 +8,34 @@ export async function fetchTrandingMovies(currentPage) {
     `${BASE_URL}/trending/movie/day?api_key=${API_KEY}&page=${currentPage}`
   );
 }
+
 export async function fetchTrandingTVEpisodes(currentPage) {
   return await axios.get(
     `${BASE_URL}/trending/tv/day?api_key=${API_KEY}&page=${currentPage}`
   );
 }
-export async function fetchMovies() {
-  return await axios.get(`${BASE_URL}/discover/movie?api_key=${API_KEY}`);
-}
+// export async function fetchMovies() {
+//   return await axios.get(`${BASE_URL}/discover/movie?api_key=${API_KEY}`);
+// }
 
 export async function fetchMovieById(movieId) {
   return await axios.get(`${BASE_URL}/movie/${movieId}?api_key=${API_KEY}`);
+}
+
+export async function fetchTVEpisodesById(tvepisodesId) {
+  return await axios.get(`${BASE_URL}/tv/${tvepisodesId}?api_key=${API_KEY}`);
+}
+
+export async function fetchMovieByQuery(value, currentPage) {
+  return await axios.get(
+    `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${value}&include_adult=false&page=${currentPage}`
+  );
+}
+
+export async function fetchTVByQuery(value, currentPage) {
+  return await axios.get(
+    `${BASE_URL}/search/tv?api_key=${API_KEY}&query=${value}&include_adult=false&page=${currentPage}`
+  );
 }
 
 export async function fetchSimilarMovie(movieId, currentPage) {
@@ -27,16 +44,6 @@ export async function fetchSimilarMovie(movieId, currentPage) {
   );
 }
 
-export async function fetchMovieByQuery(value, currentPage) {
-  return await axios.get(
-    `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${value}&include_adult=false&page=${currentPage}`
-  );
-}
-export async function fetchTVByQuery(value, currentPage) {
-  return await axios.get(
-    `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${value}&include_adult=false&page=${currentPage}`
-  );
-}
 export async function fetchMovieCredits(movieId) {
   return await axios.get(
     `${BASE_URL}/movie/${movieId}/credits?api_key=${API_KEY}`
@@ -66,6 +73,6 @@ export async function fetchMovieBySort(sortOption, currentPage) {
 }
 export async function fetchTVBySort(sortOption, currentPage) {
   return await axios.get(
-    `${BASE_URL}/discover/tv?api_key=${API_KEY}&sort_by=${sortOption}&page=page=${currentPage}`
+    `${BASE_URL}/discover/tv?api_key=${API_KEY}&sort_by=${sortOption}&page=${currentPage}`
   );
 }

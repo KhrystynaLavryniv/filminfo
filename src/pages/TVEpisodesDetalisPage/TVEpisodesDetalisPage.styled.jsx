@@ -35,13 +35,13 @@ export const MovieInfo = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
-  padding: 20px 0;
+  // padding: 20px 0;
 `;
 
 export const MovieDetails = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 15px;
+  // margin-bottom: 15px;
 `;
 
 export const MovieImg = styled.img`
@@ -49,6 +49,7 @@ export const MovieImg = styled.img`
   width: 280px;
   height: 100%;
   border-radius: 5px;
+  margin: auto;
   margin-right: 40px;
 `;
 

@@ -67,7 +67,7 @@ const MoviesPage = () => {
       </SearchOptionContainer>
 
       {loading && <Loader />}
-      {movies && <MoviesGalery movies={movies} />}
+      {movies && <MoviesGalery pathName={'/movies'} movies={movies} />}
 
       <PaginationList
         totalPage={totalPage}

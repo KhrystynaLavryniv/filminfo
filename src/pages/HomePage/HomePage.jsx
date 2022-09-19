@@ -13,7 +13,7 @@ import {
   IconScale,
 } from './HomePage.styled';
 
-const HomePage = ({ movies, tvEpisodes }) => {
+const HomePage = ({ movies, tvepisodes, onClick }) => {
   const location = useLocation();
 
   return (
@@ -38,13 +38,15 @@ const HomePage = ({ movies, tvEpisodes }) => {
             </div>
           </IconContext.Provider>
         </Title>
-        <SeeMoreBtn>
+        <SeeMoreBtn onClick={onClick}>
           <SeeMoreLink to={`/movies/trending`} state={{ from: location }}>
             See more
           </SeeMoreLink>
         </SeeMoreBtn>
       </TitleContainer>
-      {movies && <MoviesGalery movies={movies.slice(0, 5)} />}
+      {movies && (
+        <MoviesGalery pathName={'/movies'} movies={movies.slice(0, 5)} />
+      )}
 
       <TitleContainer>
         <Title>
@@ -64,14 +66,18 @@ const HomePage = ({ movies, tvEpisodes }) => {
             </div>
           </IconContext.Provider>
         </Title>
-        <SeeMoreBtn>
+        <SeeMoreBtn onClick={onClick}>
           <SeeMoreLink to={`/tvepisodes/trending`} state={{ from: location }}>
             See more
           </SeeMoreLink>
         </SeeMoreBtn>
       </TitleContainer>
-
-      {tvEpisodes && <MoviesGalery movies={tvEpisodes.slice(0, 5)} />}
+      {tvepisodes && (
+        <MoviesGalery
+          pathName={'/tvepisodes'}
+          movies={tvepisodes.slice(0, 5)}
+        />
+      )}
       <Outlet />
     </PageContainer>
   );

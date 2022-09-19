@@ -29,6 +29,7 @@ const TrandingMoviePage = ({ movies, totalPage, paginate, currentPage }) => {
 
       {movies && (
         <MoviesGalery
+          pathName={'/movies'}
           movies={movies}
           totalPage={totalPage}
           paginate={paginate}

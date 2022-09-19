@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams, useLocation, Outlet } from 'react-router-dom';
-import { fetchMovieById } from '../../services/api';
+import { fetchTVEpisodesById } from '../../services/api';
 import Loader from '../../components/Loader/Loader';
 import toast from 'react-hot-toast';
 import { BsArrowLeftShort } from 'react-icons/bs';
@@ -20,19 +20,19 @@ import {
   MovieVote,
   MovieDetailsOption,
   MovieDetailsOverview,
-} from './MovieDetalisPage.styled';
+} from './TVEpisodesDetalisPage.styled';
 import { MdOutlineStarRate } from 'react-icons/md';
 
-const MovieDetailsPage = () => {
-  const { movieId } = useParams();
-  const [movie, setMovie] = useState();
+const TVEpisodesDetalisPage = () => {
+  const { tvepisodesId } = useParams();
+  const [tvEpisode, setTVEpisode] = useState();
   const [loading, setLoading] = useState(false);
   const location = useLocation();
   const path = useRef(location);
-  console.log(useParams());
+
   useEffect(() => {
     setLoading(true);
-    fetchMovieById(movieId)
+    fetchTVEpisodesById(tvepisodesId)
       .then(data => {
         const {
           data: {
@@ -41,14 +41,15 @@ const MovieDetailsPage = () => {
             name,
             overview,
             original_language,
-            release_date,
+            episode_run_time,
             vote_average,
             genres,
+            number_of_episodes,
             vote_count,
           },
         } = data;
 
-        setMovie({
+        setTVEpisode({
           poster: poster_path
             ? 'https://image.tmdb.org/t/p/w500' + poster_path
             : imageNotFound,
@@ -58,27 +59,32 @@ const MovieDetailsPage = () => {
           vote_count,
           overview: overview ? overview : 'There is no overview',
           vote_average,
-          release_date,
-
+          episode_run_time:
+            episode_run_time.length === 0
+              ? 'Unknown run time'
+              : `${episode_run_time} min`,
+          number_of_episodes:
+            number_of_episodes === null
+              ? 'Unknown number of episodes'
+              : number_of_episodes,
           genresValues:
             genres.length === 0
               ? 'Unknown genre'
               : genres.map(({ name }) => [name]).join(', '),
         });
-        // console.log(movie);
       })
       .catch(error => {
         return toast.error('Sorry, something went wrong, try again');
       })
 
       .finally(setLoading(false));
-  }, [movieId]);
+  }, [tvepisodesId]);
 
   return (
     <MovieDetalisContainer>
       {loading && <Loader />}
 
-      {movie && (
+      {tvEpisode && (
         <>
           <Cont>
             <GoBackButton type="button">
@@ -90,53 +96,53 @@ const MovieDetailsPage = () => {
               </LinkBack>
             </GoBackButton>
             <MovieImg
-              src={movie.poster}
-              alt={movie.title ? movie.title : movie.name}
+              src={tvEpisode.poster}
+              alt={tvEpisode.title ? tvEpisode.title : tvEpisode.name}
             />
 
             <MovieInfo>
               <MovieDetails>
                 <MovieTitle>
-                  {movie.title ? movie.title : movie.name}
+                  {tvEpisode.title ? tvEpisode.title : tvEpisode.name}
                 </MovieTitle>
                 <MovieVote>
                   <MdOutlineStarRate />
-                  {Math.floor(movie.vote_average * 100) / 100}
+                  {Math.floor(tvEpisode.vote_average * 100) / 100}
                 </MovieVote>
 
-                {/* <MovieDetailsText>
-                  <MovieDetailsOption>Vote count:</MovieDetailsOption>
-                  <MovieDetailsQty>"{movie.vote_count}"</MovieDetailsQty>
-                </MovieDetailsText> */}
+                <MovieDetailsText>
+                  <MovieDetailsOption>Episodes:</MovieDetailsOption>"
+                  {tvEpisode.number_of_episodes}"
+                </MovieDetailsText>
                 <MovieDetailsText>
                   <MovieDetailsOption>Genres:</MovieDetailsOption> "
-                  {movie.genresValues}"
+                  {tvEpisode.genresValues}"
                 </MovieDetailsText>
                 <MovieDetailsText>
-                  <MovieDetailsOption>Release date:</MovieDetailsOption>"
-                  {movie.release_date}"
+                  <MovieDetailsOption>Run time :</MovieDetailsOption>"
+                  {tvEpisode.episode_run_time}"
                 </MovieDetailsText>
                 <MovieDetailsText>
-                  <MovieDetailsOption>Original language:</MovieDetailsOption>"
-                  {movie.original_language}"
+                  <MovieDetailsOption>Language:</MovieDetailsOption>"
+                  {tvEpisode.original_language}"
                 </MovieDetailsText>
                 <MovieDetailsOverview> Overview:</MovieDetailsOverview>
 
-                <MovieDetailsText>{movie.overview}</MovieDetailsText>
+                <MovieDetailsText>{tvEpisode.overview}</MovieDetailsText>
               </MovieDetails>
               <div>
                 <AdditionalInformation>
                   <li>
-                    <Link to={`/movies/${movieId}/cast`}>Cast</Link>
+                    <Link to={`/movies/${tvepisodesId}/cast`}>Cast</Link>
                   </li>
                   <li>
-                    <Link to={`/movies/${movieId}/trailer`}>Trailer</Link>
+                    <Link to={`/movies/${tvepisodesId}/trailer`}>Trailer</Link>
                   </li>
                   <li>
-                    <Link to={`/movies/${movieId}/reviews`}>Reviews</Link>
+                    <Link to={`/movies/${tvepisodesId}/reviews`}>Reviews</Link>
                   </li>
                   <li>
-                    <Link to={`/movies/${movieId}/similar`}>Similar</Link>
+                    <Link to={`/movies/${tvepisodesId}/similar`}>Similar</Link>
                   </li>
                 </AdditionalInformation>
               </div>
@@ -151,4 +157,4 @@ const MovieDetailsPage = () => {
     </MovieDetalisContainer>
   );
 };
-export default MovieDetailsPage;
+export default TVEpisodesDetalisPage;

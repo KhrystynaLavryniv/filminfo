@@ -13,8 +13,9 @@ import {
   MovieVote,
 } from './MoviesGalery.styled';
 
-const MoviesGalery = ({ movies, totalPage, paginate }) => {
+const MoviesGalery = ({ movies, tvepisodes, pathName }) => {
   const location = useLocation();
+  console.log(location.pathname);
   return (
     <>
       <MovieList>
@@ -29,7 +30,7 @@ const MoviesGalery = ({ movies, totalPage, paginate }) => {
             popularity,
           }) => (
             <MovieItem key={id}>
-              <MovieLink to={`/movies/${id}`} state={{ from: location }}>
+              <MovieLink to={`${pathName}/${id}`} state={{ from: location }}>
                 <MovieImg
                   src={
                     poster_path
@@ -44,10 +45,7 @@ const MoviesGalery = ({ movies, totalPage, paginate }) => {
                     <p>{Math.floor(vote_average * 100) / 100}</p>
                   </MovieVote>
                   <MovieTitle>{title ? title : name} </MovieTitle>
-                  <EllipsisText
-                    text={`${title ? title : name}`}
-                    length={'26'}
-                  />
+                  <EllipsisText text={`${title ? title : name}`} length={24} />
                 </MovieRate>
               </MovieLink>
             </MovieItem>

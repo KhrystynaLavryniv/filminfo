@@ -10,9 +10,8 @@ import {
 } from '../MovieDetalisPage/MovieDetalisPage.styled';
 import Pagination from 'components/Pagination/Pagination';
 
-const TrandingTVPage = ({ tvEpisodes, totalPage, paginate, currentPage }) => {
+const TrandingTVPage = ({ tvepisodes, totalPage, paginate, currentPage }) => {
   const location = useLocation();
-
   const path = useRef(location);
 
   return (
@@ -25,11 +24,14 @@ const TrandingTVPage = ({ tvEpisodes, totalPage, paginate, currentPage }) => {
           <BsArrowLeftShort />
         </LinkBack>
       </GoBackButton>
-      {tvEpisodes && <MoviesGalery movies={tvEpisodes} />}
+      {tvepisodes && (
+        <MoviesGalery movies={tvepisodes} pathName={'/tvepisodes'} />
+      )}
       <Pagination
         totalPage={totalPage}
         paginate={paginate}
         currentPage={currentPage}
+        searchParams={``}
       />
     </PageContainer>
   );
