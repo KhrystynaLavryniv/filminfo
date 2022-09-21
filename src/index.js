@@ -6,7 +6,7 @@ import { App } from 'components/App';
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter basename="/films/">
+    <BrowserRouter basename="/filminfo/">
       <App />
     </BrowserRouter>
   </React.StrictMode>,

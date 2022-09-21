@@ -31,7 +31,7 @@ const HomePage = ({ movies, tvepisodes, onClick }) => {
               <GiFilmSpool />
             </IconScale>
           </IconContext.Provider>
-          <h2>Tranding movies today</h2>
+          <h2>Trending movies today</h2>
           <IconContext.Provider value={{ color: 'aliceblue', size: '2em' }}>
             <div>
               <GiFilmSpool />
@@ -59,7 +59,7 @@ const HomePage = ({ movies, tvepisodes, onClick }) => {
           >
             <GiFilmStrip />
           </IconContext.Provider>
-          <h2>Tranding TVEpisodes today</h2>
+          <h2>Trending TVEpisodes today</h2>
           <IconContext.Provider value={{ color: 'aliceblue', size: '2em' }}>
             <div>
               <GiFilmStrip />

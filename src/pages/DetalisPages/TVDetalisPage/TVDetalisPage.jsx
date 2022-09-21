@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams, useLocation, Outlet } from 'react-router-dom';
-import { fetchTVEpisodesById } from '../../services/api';
-import Loader from '../../components/Loader/Loader';
+import { fetchTVById } from '../../../services/api';
+import Loader from '../../../components/Loader/Loader';
 import toast from 'react-hot-toast';
 import { BsArrowLeftShort } from 'react-icons/bs';
-import { Link } from '../../components/Navigation/Navigation.styled';
-import imageNotFound from '../../images/nf.jpg';
+import { Link } from '../../../components/Navigation/Navigation.styled';
+import imageNotFound from '../../../images/nf.jpg';
 import {
   GoBackButton,
   MovieImg,
@@ -20,11 +20,12 @@ import {
   MovieVote,
   MovieDetailsOption,
   MovieDetailsOverview,
-} from './TVEpisodesDetalisPage.styled';
+} from './TVDetalisPage.styled';
 import { MdOutlineStarRate } from 'react-icons/md';
+import EllipsisText from 'react-ellipsis-text/lib/components/EllipsisText';
 
-const TVEpisodesDetalisPage = () => {
-  const { tvepisodesId } = useParams();
+const TVDetalisPage = () => {
+  const { tvepisodeId } = useParams();
   const [tvEpisode, setTVEpisode] = useState();
   const [loading, setLoading] = useState(false);
   const location = useLocation();
@@ -32,7 +33,7 @@ const TVEpisodesDetalisPage = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetchTVEpisodesById(tvepisodesId)
+    fetchTVById(tvepisodeId)
       .then(data => {
         const {
           data: {
@@ -44,6 +45,7 @@ const TVEpisodesDetalisPage = () => {
             episode_run_time,
             vote_average,
             genres,
+            seasons,
             number_of_episodes,
             vote_count,
           },
@@ -57,6 +59,7 @@ const TVEpisodesDetalisPage = () => {
           name,
           original_language,
           vote_count,
+          seasons,
           overview: overview ? overview : 'There is no overview',
           vote_average,
           episode_run_time:
@@ -78,8 +81,7 @@ const TVEpisodesDetalisPage = () => {
       })
 
       .finally(setLoading(false));
-  }, [tvepisodesId]);
-
+  }, [tvepisodeId]);
   return (
     <MovieDetalisContainer>
       {loading && <Loader />}
@@ -109,40 +111,60 @@ const TVEpisodesDetalisPage = () => {
                   <MdOutlineStarRate />
                   {Math.floor(tvEpisode.vote_average * 100) / 100}
                 </MovieVote>
+                <MovieDetailsText>
+                  <MovieDetailsOption>Seasons count:</MovieDetailsOption>
+                  {tvEpisode.seasons.length}
+                </MovieDetailsText>
+                <MovieDetailsText>
+                  <MovieDetailsOption>Episodes:</MovieDetailsOption>
+                  {tvEpisode.number_of_episodes}
+                </MovieDetailsText>
+                <MovieDetailsText>
+                  <MovieDetailsOption>Genres:</MovieDetailsOption>
+                  {tvEpisode.genresValues}
+                </MovieDetailsText>
+                <MovieDetailsText>
+                  <MovieDetailsOption>Run time :</MovieDetailsOption>
+                  {tvEpisode.episode_run_time}
+                </MovieDetailsText>
 
                 <MovieDetailsText>
-                  <MovieDetailsOption>Episodes:</MovieDetailsOption>"
-                  {tvEpisode.number_of_episodes}"
-                </MovieDetailsText>
-                <MovieDetailsText>
-                  <MovieDetailsOption>Genres:</MovieDetailsOption> "
-                  {tvEpisode.genresValues}"
-                </MovieDetailsText>
-                <MovieDetailsText>
-                  <MovieDetailsOption>Run time :</MovieDetailsOption>"
-                  {tvEpisode.episode_run_time}"
-                </MovieDetailsText>
-                <MovieDetailsText>
-                  <MovieDetailsOption>Language:</MovieDetailsOption>"
-                  {tvEpisode.original_language}"
+                  <MovieDetailsOption>Language:</MovieDetailsOption>
+                  {tvEpisode.original_language}
                 </MovieDetailsText>
                 <MovieDetailsOverview> Overview:</MovieDetailsOverview>
 
-                <MovieDetailsText>{tvEpisode.overview}</MovieDetailsText>
+                {/* <MovieDetailsText>{tvEpisode.overview}</MovieDetailsText> */}
+                {/* <MovieTitle>{tvEpisode.overview} </MovieTitle> */}
+                <EllipsisText text={tvEpisode.overview} length={500} />
               </MovieDetails>
+              {/* <ol>
+                {tvEpisode.seasons.map(({ id, name, episode_count }) => (
+                  <li key={id}>
+                    <h4>{name}:</h4>
+                    <p>episode_count:{episode_count}</p>
+                  </li>
+                ))}
+              </ol> */}
               <div>
                 <AdditionalInformation>
                   <li>
-                    <Link to={`/movies/${tvepisodesId}/cast`}>Cast</Link>
+                    <Link to={`/tvepisodes/${tvepisodeId}/cast`}>Cast</Link>
                   </li>
                   <li>
-                    <Link to={`/movies/${tvepisodesId}/trailer`}>Trailer</Link>
+                    <Link to={`/tvepisodes/${tvepisodeId}/trailer`}>
+                      Trailer
+                    </Link>
                   </li>
                   <li>
-                    <Link to={`/movies/${tvepisodesId}/reviews`}>Reviews</Link>
+                    <Link to={`/tvepisodes/${tvepisodeId}/reviews`}>
+                      Reviews
+                    </Link>
                   </li>
                   <li>
-                    <Link to={`/movies/${tvepisodesId}/similar`}>Similar</Link>
+                    <Link to={`/tvepisodes/${tvepisodeId}/similar`}>
+                      Similar
+                    </Link>
                   </li>
                 </AdditionalInformation>
               </div>
@@ -157,4 +179,4 @@ const TVEpisodesDetalisPage = () => {
     </MovieDetalisContainer>
   );
 };
-export default TVEpisodesDetalisPage;
+export default TVDetalisPage;

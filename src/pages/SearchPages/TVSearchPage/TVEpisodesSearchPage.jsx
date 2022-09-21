@@ -5,10 +5,10 @@ import toast from 'react-hot-toast';
 import { fetchTVByQuery } from 'services/api';
 import MoviesGalery from 'components/MoviesGalery/MoviesGalery';
 import PaginationList from 'components/Pagination/Pagination';
-import { MoviesSearchContainer } from '../../components/MoviesSearch/MoviesSearch.styled';
+import { MoviesSearchContainer } from '../MoviesSearch/MoviesSearch.styled';
 import Loader from 'components/Loader/Loader';
 
-const TVEpisodesSearchPage = () => {
+const TVSearchPage = () => {
   const location = useLocation();
   const [movies, setMovies] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -82,4 +82,4 @@ const TVEpisodesSearchPage = () => {
   );
 };
 
-export default TVEpisodesSearchPage;
+export default TVSearchPage;

@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchMovieCredits } from '../../services/api';
+import CastList from './CastList';
 import Loader from '../Loader/Loader';
 import toast from 'react-hot-toast';
-import { CastImg, CastList, CastCont, CastItem } from './Cast.styled';
-import imageNotFound from '../../images/nf.jpg';
 
 function Cast() {
   const [castInfo, setCastInfo] = useState([]);
@@ -39,29 +38,8 @@ function Cast() {
   return (
     <>
       {loading && <Loader />}
-      <CastCont>
-        {castInfo && (
-          <CastList>
-            {castInfo.map(({ cast_id, name, character, profile_path }) => (
-              <CastItem key={cast_id}>
-                <CastImg
-                  src={
-                    profile_path
-                      ? 'https://image.tmdb.org/t/p/w500' + profile_path
-                      : imageNotFound
-                  }
-                  alt={name}
-                />
 
-                <div>
-                  <p>{name}</p>
-                  {character ? <p>({character})</p> : <p>?</p>}
-                </div>
-              </CastItem>
-            ))}
-          </CastList>
-        )}
-      </CastCont>
+      {castInfo && <CastList castInfo={castInfo} />}
     </>
   );
 }

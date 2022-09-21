@@ -2,29 +2,48 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import { Toaster, toast } from 'react-hot-toast';
 import { lazy, Suspense } from 'react';
 import { AppContainer, Container } from './App.styled';
-import { fetchTrandingMovies, fetchTrandingTVEpisodes } from 'services/api';
+import { fetchTrendingMovies, fetchTrendingTVEpisodes } from 'services/api';
 import { useEffect, useState } from 'react';
-import TrandingTVPage from 'pages/TrandingTVPage/TrandingTVPage';
-import MoviesSearch from './MoviesSearch/MoviesSearch';
-import TVEpisodesSearchPage from 'pages/TVEpisodesSearchPage/TVEpisodesSearchPage';
+import TVCast from './Cast/TvCast';
+
 const Layout = lazy(() => import('./Layout/Layout'));
 const HomePage = lazy(() => import('../pages/HomePage/HomePage'));
-const MoviesPage = lazy(() => import('../pages/MoviesPage/MoviesPage'));
-const MovieDetailsPage = lazy(() =>
-  import('../pages/MovieDetalisPage/MovieDetailsPage')
+
+const TrendingMoviePage = lazy(() =>
+  import('../pages/TrendingPages/TrendingMoviesPage/TrendingMoviesPage')
 );
-const TVEpisodesDetalisPage = lazy(() =>
-  import('../pages/TVEpisodesDetalisPage/TVEpisodesDetalisPage')
+const TrendingTVPage = lazy(() =>
+  import('../pages/TrendingPages/TrendingTVPage/TrendingTVPage')
 );
-const Cast = lazy(() => import('./Cast/Cast'));
-const Reviews = lazy(() => import('./Reviews/Reviews'));
+
+const MoviesSearch = lazy(() =>
+  import('../pages/SearchPages/MoviesSearch/MoviesSearch')
+);
 const TVPage = lazy(() => import('../pages/TVPage/TVPage'));
-const SimilarMovie = lazy(() => import('./SimilarMovie/SimilarMovie'));
-const VideoPage = lazy(() => import('./Trailer/Trailer'));
-const TrandingMoviePage = lazy(() =>
-  import('../pages/TrandingMoviesPage/TrandingMoviesPage')
+
+const MoviesPage = lazy(() => import('../pages/MoviesPage/MoviesPage'));
+const TVSearchPage = lazy(() =>
+  import('pages/SearchPages/TVSearchPage/TVEpisodesSearchPage')
 );
-const NotFound = lazy(() => import('../pages/NotFound/NotFound'));
+
+const MovieDetailsPage = lazy(() =>
+  import('../pages/DetalisPages/MovieDetalisPage/MovieDetailsPage')
+);
+const Cast = lazy(() => import('./Cast/MovieCast'));
+const Reviews = lazy(() => import('./Reviews/Reviews'));
+const ReviewsTV = lazy(() => import('./Reviews/ReviewsTv'));
+
+const SimilarMovie = lazy(() => import('./Similar/SimilarMovie'));
+const SimilarTV = lazy(() => import('./Similar/SimilarTV'));
+
+const MovieTrailer = lazy(() => import('./Trailer/MovieTrailer'));
+const TVTrailer = lazy(() => import('./Trailer/TVTrailer'));
+
+const TVDetalisPage = lazy(() =>
+  import('../pages/DetalisPages/TVDetalisPage/TVDetalisPage')
+);
+
+const NotFound = lazy(() => import('../pages/NotFoundPage/NotFound'));
 
 export const App = () => {
   const location = useLocation();
@@ -39,7 +58,7 @@ export const App = () => {
     setCurrentPage(1);
   };
   useEffect(() => {
-    fetchTrandingMovies(currentPage)
+    fetchTrendingMovies(currentPage)
       .then(data => {
         const {
           data: { results, total_pages },
@@ -53,7 +72,7 @@ export const App = () => {
   }, [currentPage]);
 
   useEffect(() => {
-    fetchTrandingTVEpisodes(currentPage)
+    fetchTrendingTVEpisodes(currentPage)
       .then(data => {
         const {
           data: { results, total_pages },
@@ -87,7 +106,7 @@ export const App = () => {
               <Route
                 path="movies/trending"
                 element={
-                  <TrandingMoviePage
+                  <TrendingMoviePage
                     movies={movies}
                     totalPage={totalPage}
                     paginate={paginate}
@@ -98,7 +117,7 @@ export const App = () => {
               <Route
                 path="tvepisodes/trending"
                 element={
-                  <TrandingTVPage
+                  <TrendingTVPage
                     tvepisodes={tvepisodes}
                     totalPage={totalPage}
                     paginate={paginate}
@@ -107,30 +126,23 @@ export const App = () => {
                 }
               />
               <Route path="movies/search" element={<MoviesSearch />} />
-              <Route
-                path="tvepisodes/search"
-                element={<TVEpisodesSearchPage />}
-              />
+              <Route path="tvepisodes/search" element={<TVSearchPage />} />
 
               <Route path="movies/:movieId" element={<MovieDetailsPage />}>
                 <Route path="cast" element={<Cast />} />
-                <Route path="trailer" element={<VideoPage />} />
+                <Route path="trailer" element={<MovieTrailer />} />
                 <Route path="reviews" element={<Reviews />} />
                 <Route path="similar" element={<SimilarMovie />} />
               </Route>
 
-              <Route
-                path="tvepisodes/:tvepisodesId"
-                element={<TVEpisodesDetalisPage />}
-              >
-                <Route path="cast" element={<Cast />} />
-                <Route path="trailer" element={<VideoPage />} />
-                <Route path="reviews" element={<Reviews />} />
-                <Route path="similar" element={<SimilarMovie />} />
+              <Route path="tvepisodes/:tvepisodeId" element={<TVDetalisPage />}>
+                <Route path="cast" element={<TVCast />} />
+                <Route path="trailer" element={<TVTrailer />} />
+                <Route path="reviews" element={<ReviewsTV />} />
+                <Route path="similar" element={<SimilarTV />} />
               </Route>
             </Route>
             <Route path="*" element={<NotFound />} />
-            {/* <Route path="*" element={<PaginationList />} /> */}
           </Routes>
           <Toaster />
         </Suspense>

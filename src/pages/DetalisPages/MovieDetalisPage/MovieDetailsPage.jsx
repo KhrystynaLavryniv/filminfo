@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams, useLocation, Outlet } from 'react-router-dom';
-import { fetchMovieById } from '../../services/api';
-import Loader from '../../components/Loader/Loader';
+import { fetchMovieById } from '../../../services/api';
+import Loader from '../../../components/Loader/Loader';
 import toast from 'react-hot-toast';
 import { BsArrowLeftShort } from 'react-icons/bs';
-import { Link } from '../../components/Navigation/Navigation.styled';
-import imageNotFound from '../../images/nf.jpg';
+import { Link } from '../../../components/Navigation/Navigation.styled';
+import imageNotFound from '../../../images/nf.jpg';
 import {
   GoBackButton,
   MovieImg,
@@ -29,7 +29,7 @@ const MovieDetailsPage = () => {
   const [loading, setLoading] = useState(false);
   const location = useLocation();
   const path = useRef(location);
-  console.log(useParams());
+
   useEffect(() => {
     setLoading(true);
     fetchMovieById(movieId)
@@ -109,16 +109,16 @@ const MovieDetailsPage = () => {
                   <MovieDetailsQty>"{movie.vote_count}"</MovieDetailsQty>
                 </MovieDetailsText> */}
                 <MovieDetailsText>
-                  <MovieDetailsOption>Genres:</MovieDetailsOption> "
-                  {movie.genresValues}"
+                  <MovieDetailsOption>Genres:</MovieDetailsOption>
+                  {movie.genresValues}
                 </MovieDetailsText>
                 <MovieDetailsText>
-                  <MovieDetailsOption>Release date:</MovieDetailsOption>"
-                  {movie.release_date}"
+                  <MovieDetailsOption>Release date:</MovieDetailsOption>
+                  {movie.release_date}
                 </MovieDetailsText>
                 <MovieDetailsText>
-                  <MovieDetailsOption>Original language:</MovieDetailsOption>"
-                  {movie.original_language}"
+                  <MovieDetailsOption>Original language:</MovieDetailsOption>
+                  {movie.original_language}
                 </MovieDetailsText>
                 <MovieDetailsOverview> Overview:</MovieDetailsOverview>
 

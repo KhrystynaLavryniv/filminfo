@@ -3,13 +3,7 @@ import { Pagination, PaginationItem } from '@mui/material';
 import { PaginationContainer } from './Pagination.styled';
 import { grey } from '@mui/material/colors';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import {
-  Link,
-  MemoryRouter,
-  Routes,
-  Route,
-  useLocation,
-} from 'react-router-dom';
+import { Link, MemoryRouter, Routes, Route } from 'react-router-dom';
 
 const theme = createTheme({
   palette: {
@@ -19,8 +13,6 @@ const theme = createTheme({
   },
 });
 const PaginationList = ({ totalPage, currentPage, paginate, searchParams }) => {
-  const location = useLocation();
-  console.log(location);
   return (
     <PaginationContainer>
       <ThemeProvider theme={theme}>
