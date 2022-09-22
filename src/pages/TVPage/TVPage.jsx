@@ -5,7 +5,7 @@ import Loader from '../../components/Loader/Loader';
 import toast from 'react-hot-toast';
 import MoviesGalery from '../../components/MoviesGalery/MoviesGalery';
 import SortBar from '../../components/SortBar/SortBar';
-import { SearchOptionContainer } from './TVPage.styled';
+import { SearchOptionContainer } from '../MoviesPage/MoviesPage.styled';
 import { PageContainer } from 'pages/MoviesPage/MoviesPage.styled';
 import PaginationList from 'components/Pagination/Pagination';
 import { ImSearch } from 'react-icons/im';

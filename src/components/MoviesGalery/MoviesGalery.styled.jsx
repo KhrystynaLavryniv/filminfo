@@ -19,9 +19,9 @@ export const MovieList = styled.ul`
 `;
 export const MovieItem = styled.li`
   position: relative;
-  width: calc(100% / 5 - 20px);
+  width: calc(100% / 2 - 20px);
   height: auto;
-  margin: 15px 10px;
+  margin: 10px;
   border-radius: 5px;
   border-radius: 5px 5px 5px 5px;
   -webkit-box-shadow: 5px 5px 12px 0px rgba(196, 232, 241, 1);
@@ -33,6 +33,15 @@ export const MovieItem = styled.li`
     -webkit-box-shadow: 5px 5px 12px 0px rgba(196, 232, 241, 1);
     -moz-box-shadow: 5px 5px 12px 0px rgba(196, 232, 241, 1);
     box-shadow: 5px 5px 12px 0px rgba(196, 232, 241, 1);
+  }
+
+  @media screen and (min-width: 768px) {
+    width: calc(100% / 4 - 20px);
+    margin: 15px 10px;
+  }
+  @media screen and (min-width: 1200px) {
+    width: calc(100% / 5 - 20px);
+    margin: 15px 10px;
   }
 `;
 export const MovieLink = styled(Link)`
@@ -51,10 +60,16 @@ export const MovieRate = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10px 10px 0 10px;
+  padding: 2px 10px 2px 10px;
+  text-align: center;
+
   height: 25px;
   color: aliceblue;
-  font-size: 14px;
+  font-size: 12px;
+  @media screen and (min-width: 1200px) {
+    padding: 10px 10px 0 10px;
+    font-size: 14px;
+  }
 `;
 export const MovieVote = styled.div`
   width: max-content;

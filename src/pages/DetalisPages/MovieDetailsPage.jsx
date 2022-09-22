@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams, useLocation, Outlet } from 'react-router-dom';
-import { fetchMovieById } from '../../../services/api';
-import Loader from '../../../components/Loader/Loader';
+import { fetchMovieById } from '../../services/api';
+import Loader from '../../components/Loader/Loader';
 import toast from 'react-hot-toast';
 import { BsArrowLeftShort } from 'react-icons/bs';
-import { Link } from '../../../components/Navigation/Navigation.styled';
-import imageNotFound from '../../../images/nf.jpg';
+import { Link } from '../../components/Navigation/Navigation.styled';
+import imageNotFound from '../../images/nf.jpg';
 import {
   GoBackButton,
   MovieImg,
@@ -20,7 +20,7 @@ import {
   MovieVote,
   MovieDetailsOption,
   MovieDetailsOverview,
-} from './MovieDetalisPage.styled';
+} from './DetalisPage.styled';
 import { MdOutlineStarRate } from 'react-icons/md';
 
 const MovieDetailsPage = () => {

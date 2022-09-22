@@ -8,9 +8,18 @@ export const TrailerList = styled.ul`
 `;
 export const TrailerItem = styled.li`
   margin-bottom: 15px;
+  width: 100%;
 
-  // & iframe {
-  //   width: 650px;
-  //   height: 400px;
-  // }
+  & iframe {
+    width: 100%;
+    height: auto;
+    @media screen and (min-width: 768px) {
+      width: 100%;
+      height: 400px;
+    }
+    @media screen and (min-width: 1200px) {
+      width: 100%;
+      height: 500%;
+    }
+  }
 `;

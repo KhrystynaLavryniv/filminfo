@@ -24,8 +24,6 @@ const CastList = ({ castInfo }) => {
           </CastItem>
         ))}
       </CastListStyled>
-      {/* <button>"prev"</button>
-      <button>"next"</button> */}
     </CastCont>
   );
 };

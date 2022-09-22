@@ -9,11 +9,18 @@ export const AppContainer = styled.div`
   background-size: 100%;
 `;
 export const Container = styled.div`
-  max-width: 1100px;
+  max-width: 300px;
   background-color: #212c39;
   margin: 0 auto;
   border-radius: 10px;
   -webkit-box-shadow: 5px 5px 12px 0px rgba(196, 232, 241, 1);
   -moz-box-shadow: 5px 5px 12px 0px rgba(196, 232, 241, 1);
   box-shadow: 5px 5px 12px 0px rgba(196, 232, 241, 1);
+
+  @media screen and (min-width: 768px) {
+    max-width: 700px;
+  }
+  @media screen and (min-width: 1200px) {
+    max-width: 1100px;
+  }
 `;

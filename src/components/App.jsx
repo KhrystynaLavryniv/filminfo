@@ -10,24 +10,22 @@ const Layout = lazy(() => import('./Layout/Layout'));
 const HomePage = lazy(() => import('../pages/HomePage/HomePage'));
 
 const TrendingMoviePage = lazy(() =>
-  import('../pages/TrendingPages/TrendingMoviesPage/TrendingMoviesPage')
+  import('../pages/TrendingPages/TrendingMoviesPage')
 );
 const TrendingTVPage = lazy(() =>
-  import('../pages/TrendingPages/TrendingTVPage/TrendingTVPage')
+  import('../pages/TrendingPages/TrendingTVPage')
 );
 
-const MoviesSearch = lazy(() =>
-  import('../pages/SearchPages/MoviesSearch/MoviesSearch')
-);
+const MoviesSearch = lazy(() => import('../pages/SearchPages/MoviesSearch'));
 const TVPage = lazy(() => import('../pages/TVPage/TVPage'));
 
 const MoviesPage = lazy(() => import('../pages/MoviesPage/MoviesPage'));
 const TVSearchPage = lazy(() =>
-  import('pages/SearchPages/TVSearchPage/TVEpisodesSearchPage')
+  import('pages/SearchPages/TVEpisodesSearchPage')
 );
 
 const MovieDetailsPage = lazy(() =>
-  import('../pages/DetalisPages/MovieDetalisPage/MovieDetailsPage')
+  import('../pages/DetalisPages/MovieDetailsPage')
 );
 const Cast = lazy(() => import('./Cast/MovieCast'));
 const Reviews = lazy(() => import('./Reviews/Reviews'));
@@ -39,9 +37,7 @@ const SimilarTV = lazy(() => import('./Similar/SimilarTV'));
 const MovieTrailer = lazy(() => import('./Trailer/MovieTrailer'));
 const TVTrailer = lazy(() => import('./Trailer/TVTrailer'));
 
-const TVDetalisPage = lazy(() =>
-  import('../pages/DetalisPages/TVDetalisPage/TVDetalisPage')
-);
+const TVDetalisPage = lazy(() => import('../pages/DetalisPages/TVDetalisPage'));
 
 const NotFound = lazy(() => import('../pages/NotFoundPage/NotFound'));
 

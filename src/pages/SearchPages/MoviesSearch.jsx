@@ -2,13 +2,13 @@ import { SearchBar } from 'components/SearchBar/SearchBar';
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, useLocation } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import { fetchTVByQuery } from 'services/api';
+import { fetchMovieByQuery } from 'services/api';
 import MoviesGalery from 'components/MoviesGalery/MoviesGalery';
 import PaginationList from 'components/Pagination/Pagination';
-import { MoviesSearchContainer } from '../MoviesSearch/MoviesSearch.styled';
+import { MoviesSearchContainer } from './SearchPages.styled';
 import Loader from 'components/Loader/Loader';
 
-const TVSearchPage = () => {
+const MoviesSearch = () => {
   const location = useLocation();
   const [movies, setMovies] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -40,7 +40,7 @@ const TVSearchPage = () => {
     }
 
     setLoading(true);
-    fetchTVByQuery(searchString, currentPage)
+    fetchMovieByQuery(searchString, currentPage)
       .then(data => {
         const {
           data: { results, total_pages },
@@ -69,7 +69,7 @@ const TVSearchPage = () => {
       <SearchBar onSubmit={handleSubmit} />
       {movies.length > 0 && (
         <>
-          <MoviesGalery movies={movies} pathName={'/tvepisodes'} />
+          <MoviesGalery movies={movies} pathName={'/movies'} />
           <PaginationList
             totalPage={totalPage}
             paginate={paginate}
@@ -82,4 +82,4 @@ const TVSearchPage = () => {
   );
 };
 
-export default TVSearchPage;
+export default MoviesSearch;

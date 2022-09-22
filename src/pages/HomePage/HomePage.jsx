@@ -7,8 +7,10 @@ import { GiFilmSpool, GiFilmStrip } from 'react-icons/gi';
 import { IconContext } from 'react-icons';
 import {
   SeeMoreBtn,
+  SeeMoreBtnDesk,
   SeeMoreLink,
   TitleContainer,
+  TitleText,
   Title,
   IconScale,
 } from './HomePage.styled';
@@ -31,21 +33,28 @@ const HomePage = ({ movies, tvepisodes, onClick }) => {
               <GiFilmSpool />
             </IconScale>
           </IconContext.Provider>
-          <h2>Trending movies today</h2>
+          <TitleText>Trending movies today</TitleText>
           <IconContext.Provider value={{ color: 'aliceblue', size: '2em' }}>
             <div>
               <GiFilmSpool />
             </div>
           </IconContext.Provider>
         </Title>
-        <SeeMoreBtn onClick={onClick}>
+        <SeeMoreBtnDesk onClick={onClick}>
           <SeeMoreLink to={`/movies/trending`} state={{ from: location }}>
             See more
           </SeeMoreLink>
-        </SeeMoreBtn>
+        </SeeMoreBtnDesk>
       </TitleContainer>
       {movies && (
-        <MoviesGalery pathName={'/movies'} movies={movies.slice(0, 5)} />
+        <>
+          <MoviesGalery pathName={'/movies'} movies={movies.slice(0, 4)} />
+          <SeeMoreBtn onClick={onClick}>
+            <SeeMoreLink to={`/movies/trending`} state={{ from: location }}>
+              See more
+            </SeeMoreLink>
+          </SeeMoreBtn>
+        </>
       )}
 
       <TitleContainer>
@@ -59,24 +68,29 @@ const HomePage = ({ movies, tvepisodes, onClick }) => {
           >
             <GiFilmStrip />
           </IconContext.Provider>
-          <h2>Trending TVEpisodes today</h2>
+          <TitleText>Trending TVEpisodes today</TitleText>
           <IconContext.Provider value={{ color: 'aliceblue', size: '2em' }}>
-            <div>
-              <GiFilmStrip />
-            </div>
+            <GiFilmStrip />
           </IconContext.Provider>
         </Title>
-        <SeeMoreBtn onClick={onClick}>
+        <SeeMoreBtnDesk onClick={onClick}>
           <SeeMoreLink to={`/tvepisodes/trending`} state={{ from: location }}>
             See more
           </SeeMoreLink>
-        </SeeMoreBtn>
+        </SeeMoreBtnDesk>
       </TitleContainer>
       {tvepisodes && (
-        <MoviesGalery
-          pathName={'/tvepisodes'}
-          movies={tvepisodes.slice(0, 5)}
-        />
+        <>
+          <MoviesGalery
+            pathName={'/tvepisodes'}
+            movies={tvepisodes.slice(0, 4)}
+          />
+          <SeeMoreBtn onClick={onClick}>
+            <SeeMoreLink to={`/tvepisodes/trending`} state={{ from: location }}>
+              See more
+            </SeeMoreLink>
+          </SeeMoreBtn>
+        </>
       )}
       <Outlet />
     </PageContainer>

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchSimilarMovie } from '../../services/api';
 import toast from 'react-hot-toast';
-import { SimilarMovieContainer } from './SimilarMovie.styled';
+import { SimilarMovieContainer } from './Similar.styled';
 import MoviesGalery from 'components/MoviesGalery/MoviesGalery';
 import PaginationList from 'components/Pagination/Pagination';
 

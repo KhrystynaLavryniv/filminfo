@@ -1,16 +1,29 @@
 import styled from 'styled-components';
 
 export const SearchForm = styled.form`
-  width: 550px;
+  width: 250px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-top: 20px;
   padding: 0 10px;
 
-  // -webkit-box-shadow: 3px 1px 14px 0px rgba(196, 232, 241, 1);
-  // -moz-box-shadow: 3px 1px 14px 0px rgba(196, 232, 241, 1);
-  // box-shadow: 3px 1px 14px 0px rgba(196, 232, 241, 1);
+  @media screen and (min-width: 768px) {
+    width: 550px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+    padding: 0 10px;
+  }
+  @media screen and (min-width: 1200px) {
+    width: 550px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+    padding: 0 10px;
+  }
 `;
 export const SearchInput = styled.input`
   border: none;
